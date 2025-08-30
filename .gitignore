@@ -1,0 +1,39 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.swp
+*.egg-info/
+*.env
+venv/
+env/
+
+# Docker
+*.tar
+docker-compose.override.yml
+docker-compose.override.yaml
+
+# Helm / Kubernetes
+*.tgz
+*.bak
+*.backup
+
+# Terraform
+terraform.tfstate
+terraform.tfstate.backup
+*.tfplan
+.terraform/
+
+# Logs
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE / Editor
+.vscode/
+.idea/
+*.iml
+

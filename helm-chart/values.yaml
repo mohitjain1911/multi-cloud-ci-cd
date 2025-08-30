@@ -1,0 +1,15 @@
+replicaCount: 2
+
+image:
+  repository: tsmohitjain/flask-task-manager
+  tag: latest
+  pullPolicy: IfNotPresent
+
+service:
+  type: LoadBalancer   
+  port: 5000
+
+resources: {}
+
+ingress:
+  enabled: false
