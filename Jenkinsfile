@@ -14,7 +14,7 @@ pipeline {
                 git branch: 'main', url: 'https://github.com/mohitjain1911/multi-cloud-ci-cd.git'
             }
         }
-
+         
         stage('Build Docker Image') {
             steps {
                 script {
