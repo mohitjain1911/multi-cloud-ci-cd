@@ -1,5 +1,4 @@
 replicaCount: 2
-
 image:
   repository: tsmohitjain/flask-task-manager
   tag: latest
