@@ -6,7 +6,7 @@ pipeline {
         AWS_CREDENTIALS = credentials('aws-creds')             // Jenkins AWS IAM credentials ID
         AWS_REGION = 'us-east-1'
         EKS_CLUSTER = 'flask-task-manager-eks'
-        IMAGE_NAME = 'mohit/flask-task-manager'               // Your DockerHub repo
+        IMAGE_NAME = 'tsmohitjain/flask-task-manager'               // Your DockerHub repo
     }
 
     stages {
