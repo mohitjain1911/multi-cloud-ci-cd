@@ -8,12 +8,6 @@ pipeline {
     }
 
     stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/mohitjain1911/multi-cloud-ci-cd.git'
-            }
-        }
-
         stage('Build Docker Image') {
             steps {
                 script {
@@ -28,7 +22,6 @@ pipeline {
 
         stage('Push Docker Image') {
             steps {
-                // Use withCredentials to access your DockerHub username/password
                 withCredentials([usernamePassword(
                     credentialsId: 'docker-creds',
                     usernameVariable: 'DOCKERHUB_USER',
@@ -56,7 +49,7 @@ pipeline {
                 }
             }
         }
- 
+
         stage('Deploy with Helm') {
             steps {
                 sh """
