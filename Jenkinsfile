@@ -1,6 +1,8 @@
 pipeline {
     agent any
-
+    tools {
+        git 'Default'  
+    }
     environment {
         AWS_REGION = 'us-east-1'
         EKS_CLUSTER = 'flask-task-manager-eks'
