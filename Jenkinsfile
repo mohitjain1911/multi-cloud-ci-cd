@@ -4,6 +4,8 @@ pipeline {
     environment {
         AWS_REGION   = 'us-east-1'
         EKS_CLUSTER  = 'flask-task-manager-eks'
+        AKS_CLUSTER  = 'flask-task-manager-aks'
+        AKS_RG       = 'flask-task-rg'
         IMAGE_NAME   = 'tsmohitjain/flask-task-manager'
     }
 
@@ -46,7 +48,33 @@ pipeline {
                       # Configure kubeconfig for EKS
                       aws eks --region ${AWS_REGION} update-kubeconfig --name ${EKS_CLUSTER}
 
-                      # Helm deploy
+                      # Helm deploy to EKS
+                      helm upgrade --install flask-task-manager ./helm-chart \
+                        --set image.repository=${IMAGE_NAME} \
+                        --set image.tag=${IMAGE_TAG}
+                    """
+                }
+            }
+        }
+
+        stage('Deploy to AKS with Helm') {
+            steps {
+                withCredentials([
+                    usernamePassword(credentialsId: 'azure-service-principal',
+                        usernameVariable: 'AZURE_CLIENT_ID',
+                        passwordVariable: 'AZURE_CLIENT_SECRET'),
+                    string(credentialsId: 'azure-tenant-id', variable: 'AZURE_TENANT_ID'),
+                    string(credentialsId: 'azure-subscription-id', variable: 'AZURE_SUBSCRIPTION_ID')
+                ]) {
+                    sh """
+                      # Login to Azure with Service Principal
+                      az login --service-principal -u ${AZURE_CLIENT_ID} -p ${AZURE_CLIENT_SECRET} --tenant ${AZURE_TENANT_ID}
+                      az account set --subscription ${AZURE_SUBSCRIPTION_ID}
+
+                      # Configure kubeconfig for AKS
+                      az aks get-credentials --resource-group ${AKS_RG} --name ${AKS_CLUSTER} --overwrite-existing
+
+                      # Helm deploy to AKS
                       helm upgrade --install flask-task-manager ./helm-chart \
                         --set image.repository=${IMAGE_NAME} \
                         --set image.tag=${IMAGE_TAG}
@@ -58,7 +86,7 @@ pipeline {
 
     post {
         success {
-            echo "✅ Deployment completed successfully: ${IMAGE_NAME}:${IMAGE_TAG}"
+            echo "✅ Deployment completed successfully on both EKS & AKS: ${IMAGE_NAME}:${IMAGE_TAG}"
         }
         failure {
             echo "❌ Deployment failed!"
