@@ -1,7 +1,3 @@
-Got it 👍 You want the earlier **portfolio-style case study format** but also keep the best technical details from your current README. I’ll merge both properly.
-
-Here’s the full rewritten `README.md` you can paste into GitHub:
-
 # 🌍 Multi-Cloud CI/CD with Jenkins, AWS EKS & Azure AKS
 
 A case study of building and deploying a **multi-cloud CI/CD pipeline** using **Jenkins, Docker, Helm, and Terraform**.  
@@ -190,3 +186,4 @@ http://<EXTERNAL-IP>:5000
 ⚡ Built for learning **Multi-Cloud DevOps + CI/CD** 🚀
 
 ```
+
