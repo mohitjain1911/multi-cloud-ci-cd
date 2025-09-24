@@ -1,18 +1,58 @@
+Got it 👍 You want the earlier **portfolio-style case study format** but also keep the best technical details from your current README. I’ll merge both properly.
+
+Here’s the full rewritten `README.md` you can paste into GitHub:
+
 # 🌍 Multi-Cloud CI/CD with Jenkins, AWS EKS & Azure AKS
 
-This project demonstrates a **multi-cloud CI/CD pipeline** using **Jenkins**, **Docker**, **Helm**, and **Terraform**, deploying a Flask application to both **Amazon EKS** and **Azure AKS**.
+A case study of building and deploying a **multi-cloud CI/CD pipeline** using **Jenkins, Docker, Helm, and Terraform**.  
+This project demonstrates how a single pipeline can build a Flask app and deploy it simultaneously to **Amazon EKS** and **Azure AKS**, avoiding vendor lock-in.
 
-The pipeline automates:
+---
 
-* Building the app image
-* Pushing to DockerHub
-* Deploying via Helm to AWS + Azure clusters
+## 🚩 Problem
+Organizations relying on a single cloud provider risk **vendor lock-in** and lack of resiliency.  
+A solution is to create a **cloud-agnostic CI/CD pipeline** that works across providers with minimal manual effort.
+
+---
+
+## 💡 Solution
+I designed and implemented a **Jenkins-based CI/CD pipeline** that:
+
+- Builds and tests a **Flask application**
+- Pushes images to **DockerHub**
+- Provisions infrastructure using **Terraform**
+- Deploys to **AWS EKS** and **Azure AKS** with **Helm**
+- Uses **Jenkins credentials** to securely manage cloud access
+
+---
+
+## 🎯 My Role
+- Authored the **Jenkinsfile** for automated build → push → deploy
+- Created reusable **Helm charts** for Kubernetes deployments
+- Automated infrastructure setup with **Terraform** modules for EKS & AKS
+- Configured Jenkins with **multi-cloud credentials**
+- Documented the end-to-end workflow for reproducibility
+
+---
+
+## 📊 Outcome
+- ✅ Fully automated CI/CD → single Git commit triggers deployments on AWS & Azure  
+- ✅ Eliminated manual cluster setup using Terraform  
+- ✅ Pipeline extensible to **Google GKE** or other clouds  
+- ✅ Showcases practical **multi-cloud DevOps** approach  
+
+---
+
+## 📸 Screenshots / Demo (add yours here)
+- Jenkins pipeline run → success  
+- `kubectl get pods` on EKS  
+- `kubectl get pods` on AKS  
+- Flask app running via LoadBalancer/Ingress  
 
 ---
 
 ## 📂 Project Structure
 
-```
 multi-cloud-ci-cd/
 ├── Jenkinsfile                # Jenkins pipeline definition
 ├── flask-task-manager/        # Flask application source
@@ -31,28 +71,18 @@ multi-cloud-ci-cd/
 │   ├── eks/                   # EKS cluster setup
 │   └── aks/                   # AKS cluster setup
 └── README.md
-```
 
 ---
 
 ## ⚡ Prerequisites
 
-Before starting, ensure you have:
-
-* [Terraform](https://developer.hashicorp.com/terraform/downloads)
-* [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)
-* [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)
-* [kubectl](https://kubernetes.io/docs/tasks/tools/)
-* [Helm](https://helm.sh/docs/intro/install/)
-* [Docker](https://docs.docker.com/get-docker/)
-* A running **Jenkins server** with required plugins:
-
-  * Pipeline
-  * Git
-  * Docker
-  * Kubernetes CLI
-  * Azure CLI
-  * Credentials Binding
+- [Terraform](https://developer.hashicorp.com/terraform/downloads)  
+- [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
+- [Azure CLI](https://learn.microsoft.com/en-us/cli/azure/install-azure-cli)  
+- [kubectl](https://kubernetes.io/docs/tasks/tools/)  
+- [Helm](https://helm.sh/docs/intro/install/)  
+- [Docker](https://docs.docker.com/get-docker/)  
+- Jenkins with plugins: **Pipeline, Git, Docker, Kubernetes CLI, Azure CLI, Credentials Binding**
 
 ---
 
@@ -60,23 +90,22 @@ Before starting, ensure you have:
 
 Provision Kubernetes clusters:
 
-* **AWS EKS**:
+### AWS EKS
+```bash
+cd terraform/eks
+terraform init
+terraform plan -out=tfplan
+terraform apply tfplan
+````
 
-  ```bash
-  cd terraform/eks
-  terraform init
-  terraform plan -out=tfplan
-  terraform apply tfplan
-  ```
+### Azure AKS
 
-* **Azure AKS**:
-
-  ```bash
-  cd terraform/aks
-  terraform init
-  terraform plan -out=tfplan
-  terraform apply tfplan
-  ```
+```bash
+cd terraform/aks
+terraform init
+terraform plan -out=tfplan
+terraform apply tfplan
+```
 
 ---
 
@@ -96,21 +125,12 @@ Provision Kubernetes clusters:
 
 ### 🔹 AWS (EKS)
 
-1. Create an IAM User with programmatic access. Attach:
+1. Create an IAM User with:
 
    * `AmazonEKSClusterPolicy`
    * `AmazonEKSWorkerNodePolicy`
    * `AmazonEC2ContainerRegistryFullAccess`
-
-2. Save Access Key + Secret Key in Jenkins as `aws-credentials`.
-
-3. Jenkins pipeline configures kubeconfig automatically:
-
-   ```bash
-   aws eks --region <region> update-kubeconfig --name <eks-cluster-name>
-   ```
-
----
+2. Store access keys in Jenkins (`aws-credentials`).
 
 ### 🔹 Azure (AKS)
 
@@ -122,51 +142,28 @@ Provision Kubernetes clusters:
      --role Contributor \
      --scopes /subscriptions/<SUBSCRIPTION_ID>
    ```
-
-   Example output:
-
-   ```json
-   {
-     "appId": "xxxx-xxxx",     # Client ID
-     "password": "xxxx-xxxx",  # Client Secret
-     "tenant": "xxxx-xxxx"
-   }
-   ```
-
-2. Save values in Jenkins:
-
-   * `azure-service-principal` → (username: appId, password: password)
-   * `azure-tenant-id` → tenant
-   * `azure-subscription-id` → subscriptionId
-
-3. Jenkins configures kubeconfig:
-
-   ```bash
-   az aks get-credentials --resource-group <rg> --name <aks-cluster>
-   ```
+2. Store appId, password, tenant, subscription ID in Jenkins credentials.
 
 ---
 
 ## ⚙️ CI/CD Workflow (Jenkinsfile)
 
-1. **Checkout** → GitHub repo
-2. **Build Docker Image** → Flask app → `build-<BUILD_NUMBER>`
-3. **Push to DockerHub**
-4. **Deploy to AWS EKS (Helm)**
-5. **Deploy to Azure AKS (Helm)**
+1. **Checkout** GitHub repo
+2. **Build Docker image** → `build-<BUILD_NUMBER>`
+3. **Push image** to DockerHub
+4. **Deploy to AWS EKS** with Helm
+5. **Deploy to Azure AKS** with Helm
 
 ---
 
 ## 🌐 Accessing the App
-
-Once deployed:
 
 ```bash
 kubectl get svc -n <namespace>
 kubectl get ingress -n <namespace>
 ```
 
-Example for LoadBalancer service:
+Example:
 
 ```
 http://<EXTERNAL-IP>:5000
@@ -178,28 +175,18 @@ http://<EXTERNAL-IP>:5000
 
 * Flask app deployed on **AWS EKS** and **Azure AKS**
 * Accessible via LoadBalancer or Ingress
-* Automated builds & deployments on every Git push
+* Pipeline automates deployments on every Git push
 
 ---
 
-## 📌 Notes
+## 📌 Extensions
 
-* Ensure Jenkins agents have `kubectl`, `aws-cli`, `az-cli`, `helm`, and `docker`.
-* Update cluster names, resource group names, and image repository in:
-
-  * `Jenkinsfile`
-  * `helm-chart/values.yaml`
-
----
-
-## 🤝 Contributions & Extensions
-
-* Extend to **Google GKE** for true multi-cloud coverage.
-* Replace DockerHub with **ECR/ACR** for cloud-native registries.
-* Add monitoring with **Prometheus + Grafana**.
+* Add **Google GKE** for true multi-cloud coverage
+* Replace DockerHub with **ECR/ACR**
+* Integrate monitoring with **Prometheus + Grafana**
 
 ---
 
 ⚡ Built for learning **Multi-Cloud DevOps + CI/CD** 🚀
 
----
+```
