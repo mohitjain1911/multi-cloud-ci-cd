@@ -50,22 +50,22 @@ I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 ## 📂 Project Structure
 
 multi-cloud-ci-cd/
-├── Jenkinsfile                
-├── flask-task-manager/        
+├── Jenkinsfile  
+├── flask-task-manager/   
 │   ├── Dockerfile
 │   ├── app.py
 │   ├── requirements.txt
 │   └── templates/
-├── helm-chart/                
+├── helm-chart/    
 │   ├── Chart.yaml
 │   ├── values.yaml
 │   └── templates/
 │       ├── deployment.yaml
 │       ├── service.yaml
 │       └── ingress.yaml
-├── terraform/                 
-│   ├── eks/                   
-│   └── aks/                 
+├── terraform/        
+│   ├── eks/           
+│   └── aks/          
 └── README.md
 
 ---
@@ -184,6 +184,7 @@ http://<EXTERNAL-IP>:5000
 ---
 
 ⚡ Built for learning **Multi-Cloud DevOps + CI/CD** 🚀
+
 
 
 
