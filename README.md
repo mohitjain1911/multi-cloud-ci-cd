@@ -32,10 +32,10 @@ I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 ---
 
 ## Outcome
-- ✅ Fully automated CI/CD → single Git commit triggers deployments on AWS & Azure  
-- ✅ Eliminated manual cluster setup using Terraform  
-- ✅ Pipeline extensible to **Google GKE** or other clouds  
-- ✅ Showcases practical **multi-cloud DevOps** approach  
+- Fully automated CI/CD → single Git commit triggers deployments on AWS & Azure  
+- Eliminated manual cluster setup using Terraform  
+- Pipeline extensible to **Google GKE** or other clouds  
+- Showcases practical **multi-cloud DevOps** approach  
 
 
 ## Project Structure
@@ -175,6 +175,7 @@ http://<EXTERNAL-IP>:5000
 
 ---
 Built for learning **Multi-Cloud DevOps + CI/CD** 
+
 
 
 
