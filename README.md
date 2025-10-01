@@ -37,15 +37,6 @@ I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 - ✅ Pipeline extensible to **Google GKE** or other clouds  
 - ✅ Showcases practical **multi-cloud DevOps** approach  
 
----
-
-## 📸 Screenshots / Demo (add yours here)
-- Jenkins pipeline run → success  
-- `kubectl get pods` on EKS  
-- `kubectl get pods` on AKS  
-- Flask app running via LoadBalancer/Ingress  
-
----
 
 ## 📂 Project Structure
 
@@ -184,6 +175,7 @@ http://<EXTERNAL-IP>:5000
 ---
 
 ⚡ Built for learning **Multi-Cloud DevOps + CI/CD** 🚀
+
 
 
 
