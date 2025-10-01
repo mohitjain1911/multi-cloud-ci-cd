@@ -1,17 +1,17 @@
-# 🌍 Multi-Cloud CI/CD with Jenkins, AWS EKS & Azure AKS
+# Multi-Cloud CI/CD with Jenkins, AWS EKS & Azure AKS
 
 A case study of building and deploying a **multi-cloud CI/CD pipeline** using **Jenkins, Docker, Helm, and Terraform**.  
 This project demonstrates how a single pipeline can build a Flask app and deploy it simultaneously to **Amazon EKS** and **Azure AKS**, avoiding vendor lock-in.
 
 ---
 
-## 🚩 Problem
+## Problem
 Organizations relying on a single cloud provider risk **vendor lock-in** and lack of resiliency.  
 A solution is to create a **cloud-agnostic CI/CD pipeline** that works across providers with minimal manual effort.
 
 ---
 
-## 💡 Solution
+## Solution
 I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 
 - Builds and tests a **Flask application**
@@ -22,7 +22,7 @@ I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 
 ---
 
-## 🎯 My Role
+## My Role
 - Authored the **Jenkinsfile** for automated build → push → deploy
 - Created reusable **Helm charts** for Kubernetes deployments
 - Automated infrastructure setup with **Terraform** modules for EKS & AKS
@@ -31,14 +31,14 @@ I designed and implemented a **Jenkins-based CI/CD pipeline** that:
 
 ---
 
-## 📊 Outcome
+## Outcome
 - ✅ Fully automated CI/CD → single Git commit triggers deployments on AWS & Azure  
 - ✅ Eliminated manual cluster setup using Terraform  
 - ✅ Pipeline extensible to **Google GKE** or other clouds  
 - ✅ Showcases practical **multi-cloud DevOps** approach  
 
 
-## 📂 Project Structure
+## Project Structure
 
 multi-cloud-ci-cd/
 - Jenkinsfile
@@ -62,7 +62,7 @@ multi-cloud-ci-cd/
 
 ---
 
-## ⚡ Prerequisites
+## Prerequisites
 
 - [Terraform](https://developer.hashicorp.com/terraform/downloads)  
 - [AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html)  
@@ -74,7 +74,7 @@ multi-cloud-ci-cd/
 
 ---
 
-## 🚀 Infrastructure Setup (Terraform)
+## Infrastructure Setup (Terraform)
 
 Provision Kubernetes clusters:
 
@@ -97,7 +97,7 @@ terraform apply tfplan
 
 ---
 
-## 🔑 Jenkins Credentials Required
+## Jenkins Credentials Required
 
 | ID                        | Type              | Usage                              |
 | ------------------------- | ----------------- | ---------------------------------- |
@@ -109,9 +109,9 @@ terraform apply tfplan
 
 ---
 
-## ☁️ Cloud Setup
+## Cloud Setup
 
-### 🔹 AWS (EKS)
+### AWS (EKS)
 
 1. Create an IAM User with:
 
@@ -120,7 +120,7 @@ terraform apply tfplan
    * `AmazonEC2ContainerRegistryFullAccess`
 2. Store access keys in Jenkins (`aws-credentials`).
 
-### 🔹 Azure (AKS)
+### Azure (AKS)
 
 1. Create a Service Principal:
 
@@ -134,7 +134,7 @@ terraform apply tfplan
 
 ---
 
-## ⚙️ CI/CD Workflow (Jenkinsfile)
+## CI/CD Workflow (Jenkinsfile)
 
 1. **Checkout** GitHub repo
 2. **Build Docker image** → `build-<BUILD_NUMBER>`
@@ -144,7 +144,7 @@ terraform apply tfplan
 
 ---
 
-## 🌐 Accessing the App
+## Accessing the App
 
 ```bash
 kubectl get svc -n <namespace>
@@ -159,7 +159,7 @@ http://<EXTERNAL-IP>:5000
 
 ---
 
-## ✅ Final Output
+## Final Output
 
 * Flask app deployed on **AWS EKS** and **Azure AKS**
 * Accessible via LoadBalancer or Ingress
@@ -167,15 +167,15 @@ http://<EXTERNAL-IP>:5000
 
 ---
 
-## 📌 Extensions
+## Extensions
 
 * Add **Google GKE** for true multi-cloud coverage
 * Replace DockerHub with **ECR/ACR**
 * Integrate monitoring with **Prometheus + Grafana**
 
 ---
+Built for learning **Multi-Cloud DevOps + CI/CD** 
 
-⚡ Built for learning **Multi-Cloud DevOps + CI/CD** 🚀
 
 
 
